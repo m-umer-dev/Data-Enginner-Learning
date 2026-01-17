@@ -1,9 +1,9 @@
-CREATE TABLE employee {
+CREATE TABLE employee (
     id INTEGER PRIMARY KEY,
-    name Text,
-    department Text,
+    name TEXT,
+    department TEXT,
     salary INTEGER
-}
+);
 
 INSERT INTO employee (name,department,salary) VALUES
 ('Ali', 'IT', 50000),
@@ -12,10 +12,10 @@ INSERT INTO employee (name,department,salary) VALUES
 ('Hina', 'Finance', 55000),
 ('Bilal', 'IT', 48000);
 
-SELECT * FROM employee
+SELECT * FROM employee;
 
-SELECT * FROM employee WHERE department = "IT"
+SELECT * FROM employee WHERE department = 'IT';
 
-SELECT name, salary FROM employee WHERE salary >= 50000
+SELECT name, salary FROM employee WHERE salary >= 50000;
 
 SELECT department, AVG(salary) FROM employee GROUP BY department;
