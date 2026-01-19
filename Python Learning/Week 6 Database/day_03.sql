@@ -31,3 +31,5 @@ WHERE salary > (
 );
 
 CREATE INDEX idx_dept on employee(dept_id);
+
+CREATE INDEX idx_salary on employee(salary);
