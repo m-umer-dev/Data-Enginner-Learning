@@ -23,3 +23,14 @@ FROM employee;
 SELECT name, department, salary,
 DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank
 FROM employee;
+
+SELECT *
+FROM (
+    SELECT 
+        name,
+        department,
+        salary,
+        RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rnk
+    FROM employee
+) t
+WHERE rnk = 1;
