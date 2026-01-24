@@ -34,3 +34,30 @@ FROM (
     FROM employee
 ) t
 WHERE rnk = 1;
+
+SELECT *
+FROM (
+    SELECT 
+        name, 
+        salary,
+        department,
+        RANK() over (PARTITION BY department ORDER BY salary DESC) AS rnk 
+    FROM employee
+) t
+WHERE rnk <= 2;
+
+SELECT *
+FROM (
+    SELECT 
+        name, 
+        salary,
+        department,
+        RANK() over (PARTITION BY department ORDER BY salary ASC) AS rnk 
+    FROM employee
+) t
+WHERE rnk = 1;
+
+SELECT 
+    *,
+    ROW_NUMBER() OVER (ORDER BY salary) AS row_num
+FROM employee
