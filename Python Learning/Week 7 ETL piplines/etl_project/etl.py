@@ -68,3 +68,13 @@ if __name__ == "__main__":
     load_sales(final, PROCESSED_SALES_PATH)
 
     logger.info("Config-driven ETL completed")
+
+
+def test_extract_sales():
+    data = extract_sales(RAW_SALES_PATH)
+
+    assert isinstance(data, list)
+    assert len(data) > 0
+
+    print("extract_sales test passed ✅")
+
