@@ -16,13 +16,12 @@ def transform_sales(data):
             # skip bad data
             continue
 
-        if amount < MIN_SALE_AMOUNT:
-            continue
+        if amount >= MIN_SALE_AMOUNT:
+            if amount > HIGH_SALE_LIMIT:
+                row["status"] = "high"
+            else:
+                row["status"] = "medium"
 
-        if amount >= HIGH_SALE_LIMIT:
-            row["status"] = "high"
-        else:
-            row["status"] = "medium"
 
         cleaned.append(row)
 
