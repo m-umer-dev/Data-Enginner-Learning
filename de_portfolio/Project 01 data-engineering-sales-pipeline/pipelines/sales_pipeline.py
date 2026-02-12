@@ -50,37 +50,42 @@ def transform_sales(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_sales(df: pd.DataFrame):
-    """Load into PostgreSQL"""
     if df.empty:
         logger.warning("No data to load")
         return
-
-    create_table_sql = f"""
-    CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        amount INTEGER NOT NULL,
-        status TEXT NOT NULL
-    );
-    """
 
     conn = get_connection()
     try:
         with conn:
             with conn.cursor() as cur:
-                cur.execute(create_table_sql)
-                logger.info(f"Table {TABLE_NAME} ensured in database")
+                # create table if not exists
+                cur.execute(f"""
+                    CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
+                        id SERIAL PRIMARY KEY,
+                        name TEXT NOT NULL,
+                        amount INTEGER NOT NULL,
+                        status TEXT NOT NULL
+                    );
+                """)
 
                 for _, row in df.iterrows():
+                    # skip if name already exists
                     cur.execute(
-                        f"INSERT INTO {TABLE_NAME} (name, amount, status) VALUES (%s, %s, %s)",
-                        (row["name"], row["amount"], row["status"]),
+                        f"SELECT 1 FROM {TABLE_NAME} WHERE name = %s",
+                        (row["name"],)
                     )
-        logger.info(f"Loaded {len(df)} rows into {TABLE_NAME}")
-    except Exception as e:
-        logger.error(f"Error loading data: {e}")
+                    if cur.fetchone():
+                        logger.info(f"Skipping existing record: {row['name']}")
+                        continue
+
+                    cur.execute(
+                        f"INSERT INTO {TABLE_NAME} (name, amount, status) VALUES (%s,%s,%s)",
+                        (row["name"], row["amount"], row["status"])
+                    )
+        logger.info(f"Incremental load completed. {len(df)} rows processed.")
     finally:
         conn.close()
+
 
 
 def run_pipeline():
