@@ -1,0 +1,6 @@
+customer,order_id,amount
+Ali,1,500
+Sara,2,300
+Ali,3,700
+Bilal,4,abc
+Sara,5,-100
