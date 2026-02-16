@@ -1,0 +1,7 @@
+transaction_id,customer,amount,date
+1,Ali,500,2024-01-01
+2,Sara,700,2024-01-02
+1,Ali,500,2024-01-01
+3,Bilal,-200,2024-01-03
+4,Hina,abc,2024-01-04
+5,Umer,1200,2023-12-30
