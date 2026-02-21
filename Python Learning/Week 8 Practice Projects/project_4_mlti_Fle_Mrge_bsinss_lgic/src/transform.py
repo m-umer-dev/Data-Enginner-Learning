@@ -1,34 +1,8 @@
 import csv
 import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
 logger = logging.getLogger(__name__)
 
-def extract_cust(path):
-    try:
-        with open(path,newline='') as f:
-            customer_data = list(csv.DictReader(f))
-            logger.info(f"loaded {len(customer_data)} customer records")
-            return customer_data
-    except FileNotFoundError:
-        logger.error("File not found")
-        return []
-    
-
-def extract_order(path):
-    try:
-        with open(path,newline='') as f:
-            order_data = list(csv.DictReader(f))
-            logger.info(f"Loaded {len(order_data)} order records")
-            return order_data
-    except FileNotFoundError:
-        logger.error("File not found")
-        return []
-    
 def transform(cust_data, order_data):
     cleaned_cust = []
     final_data = []
@@ -92,28 +66,3 @@ def transform(cust_data, order_data):
     logger.warning(f"Skipped orders: {skipped_orders}")
 
     return final_data
-
-def load(path,data): 
-    try: 
-        with open(path,'w',newline='') as f: 
-            writer = csv.DictWriter(
-                f,
-                fieldnames=["order_id","customer_name","city","amount"]) 
-            writer.writeheader() 
-            writer.writerows(data)
-            logger.info("Data is loaded") 
-    except FileNotFoundError: 
-        logger.error("File not found")
-        return []
-
-
-def run_pipeline():
-    logger.info("Pipeline is started")
-    cust_data = extract_cust('customers.csv')
-    order_data = extract_order('orders.csv')
-    business = transform(cust_data,order_data)
-    load('final_data.csv',business)
-    logger.info("Pipeline completed successfully")
-
-if __name__ == "__main__":
-    run_pipeline()
