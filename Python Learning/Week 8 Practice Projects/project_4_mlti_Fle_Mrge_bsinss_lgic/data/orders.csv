@@ -1,7 +1,4 @@
-order_id,customer_id,amount
-101,1,500
-102,2,700
-103,1,600
-104,3,-200
-105,5,300
-106,2,abc
+order_id,customer_name,city,amount
+101,Ali,Karachi,500
+102,Sara,Lahore,700
+103,Ali,Karachi,600
