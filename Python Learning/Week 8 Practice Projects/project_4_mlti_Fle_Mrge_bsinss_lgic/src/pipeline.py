@@ -21,7 +21,7 @@ class DataPipeline:
 
         final_data = transform(cust_data,order_data)
 
-        load(self.order_path, final_data)
+        load(self.output_path, final_data)
 
         logger.info("Pipeline completed successfully")
 
