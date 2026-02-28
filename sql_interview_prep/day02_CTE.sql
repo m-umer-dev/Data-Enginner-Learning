@@ -46,3 +46,24 @@ WITH emp_pre_sal AS (
 SELECT * 
 FROM emp_pre_sal
 WHERE salary > previous_salary
+
+-- 👉 Find departments where salary strictly increases with each hire (based on hire_date).
+WITH salary_check AS (
+    SELECT
+        department,
+        salary,
+        LAG(salary) OVER(
+            PARTITION BY department
+            ORDER BY hire_date
+        ) AS previous_salary
+    FROM employees
+)
+
+SELECT department
+FROM salary_check
+GROUP BY department
+HAVING COUNT(
+    CASE 
+        WHEN salary <= previous_salary THEN 1
+    END
+) = 0;
