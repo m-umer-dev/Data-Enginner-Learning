@@ -1,0 +1,39 @@
+Multiple File Merge And Business Logic
+
+Project Overview:
+This project implements a modular ETL (Extract, Transform, Load) pipeline in Python. The pipeline follows a separation-of-concerns architecture, where each stage of data processing is isolated into independent modules. This design improves maintainability, reusability, and testability.
+
+The pipeline processes raw CSV data, applies business transformation logic, and outputs a cleaned dataset. Logging is integrated for monitoring execution flow, and unit tests validate transformation logic to ensure reliability.
+
+Architecture Design:
+The project is structured as follows:
+pipeline.py → Orchestrates pipeline execution
+↓
+extract.py → Handles data ingestion from raw CSV files
+↓
+transform.py → Applies cleaning rules and business logic
+↓
+load.py → Writes processed data to destination file
+
+Design Principles:
+Separation of Concerns: Each module has a single responsibility.
+Modular Design: Components can be reused or replaced independently.
+Testability: Transformation logic is validated using unit tests.
+Observability: Logging captures pipeline execution and errors.
+This structure allows easy extension, such as replacing CSV input with a database source without modifying transformation logic.
+
+Tech Stack:
+Python
+Pandas
+Logging (built-in logging module)
+Pytest
+CSV file handling
+
+How to Run:
+python pipeline.py
+Key Features
+
+Modular ETL architecture:
+Error handling with logging
+Unit-tested transformation logic
+Clean and maintainable project structure
