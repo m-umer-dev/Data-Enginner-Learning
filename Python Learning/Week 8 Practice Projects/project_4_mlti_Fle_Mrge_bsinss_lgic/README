@@ -37,3 +37,16 @@ Modular ETL architecture:
 Error handling with logging
 Unit-tested transformation logic
 Clean and maintainable project structure
+
+Future Improvements:
+Replace CSV ingestion with database source (PostgreSQL/MySQL)
+Add configuration file for dynamic input/output paths
+Integrate Docker for containerized deployment
+Add CI/CD workflow for automated testing
+Implement data validation checks before loading
+
+Error Handling Strategy:
+The pipeline uses structured error handling with try-except blocks to ensure failures are logged properly. Exceptions are logged with detailed messages and re-raised to prevent silent failures, ensuring data integrity and traceability.
+
+Testing
+Unit tests are implemented using Pytest to validate transformation logic and ensure expected outputs. This prevents regression issues and ensures business rules are consistently applied.
