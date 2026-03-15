@@ -1,14 +1,14 @@
+CREATE TABLE customer (
+    customer_id INTEGER PRIMARY KEY,
+    name TEXT,
+    country TEXT
+);
+
 CREATE TABLE products (
     product_id INTEGER PRIMARY KEY,
     product_name TEXT,
     category TEXT,
     price DECIMAL(10,2)
-);
-CREATE TABLE products (
-    product_id INTEGER PRIMARY KEY,
-    product_name TEXT,
-    category TEXT,
-    price INTEGER
 );
 
 CREATE TABLE orders (
@@ -44,3 +44,13 @@ INSERT INTO orders (order_id, customer_id, product_id, quantity) VALUES
 (6, 1, 2, 1),
 (7, 2, 3, 4),
 (8, 3, 1, 1);
+
+SELECT 
+    c.country,
+    SUM(o.quantity * p.price) AS total_sales
+FROM orders o
+JOIN customer c
+    ON o.customer_id = c.customer_id
+JOIN products p
+    ON o.product_id = p.product_id
+GROUP BY c.country;
