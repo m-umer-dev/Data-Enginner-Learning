@@ -54,3 +54,5 @@ JOIN customer c
 JOIN products p
     ON o.product_id = p.product_id
 GROUP BY c.country;
+
+SELECT name, country FROM customer WHERE country = 'Pakistan'
