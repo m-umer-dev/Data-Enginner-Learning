@@ -56,3 +56,47 @@ JOIN products p
 GROUP BY c.country;
 
 SELECT name, country FROM customer WHERE country = 'Pakistan'
+
+SELECT c.name, p.product_name
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+JOIN products p ON o.product_id = p.product_id
+
+SELECT c.country, p.product_name
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+JOIN products p ON o.product_id = p.product_id
+WHERE country = 'Pakistan';
+
+SELECT c.country, o.quantity
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id;
+
+SELECT c.country, SUM(o.quantity)
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+GROUP BY c.country;
+
+SELECT c.name, p.product_name, o.quantity
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+JOIN products p ON o.product_id = p.product_id
+WHERE c.country = 'Pakistan';
+
+SELECT c.name, p.product_name, p.price
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+JOIN products p ON o.product_id = p.product_id
+WHERE p.product_name = 'Laptop';
+
+SELECT 
+    c.name, 
+    c.country, 
+    p.product_name, 
+    p.price * o.quantity AS total_price
+FROM orders o
+JOIN customer c 
+    ON o.customer_id = c.customer_id
+JOIN products p 
+    ON o.product_id = p.product_id
+WHERE c.country = 'Pakistan';
