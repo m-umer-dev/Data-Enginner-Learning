@@ -142,3 +142,44 @@ JOIN products p ON o.product_id = p.product_id
 GROUP BY p.product_name 
 ORDER BY total_quan DESC 
 LIMIT 1;
+
+-- Version 01
+SELECT * FROM
+    (SELECT 
+        c.name,
+        c.country,
+        SUM(p.price * o.quantity) AS total_spent,
+        RANK() OVER(PARTITION BY c.country ORDER BY SUM(p.price * o.quantity) DESC) AS rnk
+    FROM orders o
+    JOIN customer c ON o.customer_id = c.customer_id
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY c.name,c.country) t
+WHERE rnk = 1
+
+-- Version 02 wih CTE
+
+with rnk_cust AS (SELECT 
+        c.name,
+        c.country,
+        SUM(p.price * o.quantity) AS total_spent,
+        RANK() OVER(PARTITION BY c.country ORDER BY SUM(p.price * o.quantity) DESC) AS rnk
+    FROM orders o
+    JOIN customer c ON o.customer_id = c.customer_id
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY c.name,c.country)
+
+SELECT * FROM rnk_cust WHERE rnk = 1;
+
+SELECT c.name
+FROM customer c
+LEFT JOIN orders o 
+    ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+
+SELECT c.name
+FROM orders o
+JOIN customer c ON o.customer_id = c.customer_id
+GROUP BY c.customer_id, c.name
+HAVING COUNT(DISTINCT o.product_id) = (
+    SELECT COUNT(*) FROM products
+);
