@@ -1,9 +1,6 @@
 import pandas as pd
+import numpy as np
 
-data = {
-    "Name": ["Ali", "Ahmed"],
-    "Age": [20, 22]
-}
+df = pd.read_csv('Superstore.csv', parse_dates=['Ship Date', 'Order Date'])
 
-df = pd.DataFrame(data)
-print(df)
+df.head()
